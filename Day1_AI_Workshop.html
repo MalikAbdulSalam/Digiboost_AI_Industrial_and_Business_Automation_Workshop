@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AI Instructor: Computer Vision & YOLO Training</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 40px;
+  color: #333;
+  background: white;
+}
+h1 {
+  color: #2c3e50;
+  border-bottom: 4px solid #3498db;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+  font-size: 28px;
+}
+h2 {
+  color: #2980b9;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  border-left: 5px solid #3498db;
+  padding-left: 15px;
+  font-size: 24px;
+}
+h3 {
+  color: #16a085;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+h4 {
+  color: #27ae60;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+code {
+  background-color: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  color: #c7254e;
+}
+pre {
+  background-color: #2d2d2d;
+  color: #f8f8f2;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85em;
+  margin: 15px 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.note {
+  background-color: #e7f3ff;
+  border-left: 4px solid #3498db;
+  padding: 12px 18px;
+  margin: 15px 0;
+  border-radius: 4px;
+}
+.warning {
+  background-color: #fff3e0;
+  border-left: 4px solid #f39c12;
+  padding: 12px 18px;
+  margin: 15px 0;
+  border-radius: 4px;
+}
+.success {
+  background-color: #e8f5e9;
+  border-left: 4px solid #4caf50;
+  padding: 12px 18px;
+  margin: 15px 0;
+  border-radius: 4px;
+}
+.page-break {
+  page-break-before: always;
+}
+ul, ol {
+  margin-left: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+li {
+  margin: 5px 0;
+}
+p {
+  margin: 10px 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 15px 0;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background-color: #3498db;
+  color: white;
+}
+.footer {
+  text-align: center;
+  margin-top: 50px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+  color: #777;
+}
+</style>
+</head>
+<body>
+
+<h1>Day 1: AI Industrial Automation Workshop</h1>
+<p><strong>Complete Guide to YOLO Object Detection, Security Systems, and Industrial Automation</strong></p>
+
+<!-- ==================== SECTION 1 ==================== -->
+<h2>1. YOLO (You Only Look Once)</h2>
+<p><strong>YOLO</strong> is a state-of-the-art, real-time object detection system. Unlike traditional classifiers that scan images with sliding windows, YOLO applies a single neural network to the full image, dividing it into regions and predicting bounding boxes and probabilities for each region.</p>
+
+<div class="note">
+<strong>🔑 Key Advantages:</strong>
+<ul>
+<li>Extremely fast (45-155 frames per second)</li>
+<li>Sees the entire image context (global reasoning)</li>
+<li>Learns generalizable object representations</li>
+<li>Excellent for real-time applications like security, autonomous vehicles, and industrial automation</li>
+</ul>
+</div>
+
+<h2>2. Ultralytics</h2>
+<p><strong>Ultralytics</strong> is the official implementation of YOLO, providing a simple yet powerful Python interface for training, validation, prediction, and export of YOLO models.</p>
+
+<h3>📥 Installation Guide</h3>
+
+<div class="note">
+<strong>Step 1:</strong> Download and install Miniconda from <a href="https://docs.conda.io/en/latest/miniconda.html">https://docs.conda.io/en/latest/miniconda.html</a>
+</div>
+
+<p><strong>Step 2:</strong> Open Anaconda Prompt and run the following commands:</p>
+
+<pre>
+# Create a new conda environment
+conda create -n myenv python
+
+# Activate the environment
+conda activate myenv
+
+# Install Ultralytics
+pip install ultralytics
+
+# Verify installation
+python -c "from ultralytics import YOLO; print('✅ YOLO installed successfully!')"
+</pre>
+
+<div class="warning">
+<strong>⚠️ Note:</strong> You may also need OpenCV: <code>pip install opencv-python</code> and playsound: <code>pip install playsound==1.2.2</code>
+</div>
+
+<!-- ==================== SECTION 3 ==================== -->
+<h2>3. Practical Project 1: Security Surveillance System</h2>
+
+<h3>a) Check Available IP Addresses on Network</h3>
+
+<p><strong>For Linux/Mac:</strong></p>
+<pre>
+sudo apt install nmap
+nmap -sn 192.168.1.0/24
+</pre>
+
+<p><strong>For Windows:</strong><br>
+Download Nmap from: <a href="https://nmap.org/download.html">https://nmap.org/download.html</a></p>
+
+<h3>b) View Camera Feed (RTSP Stream)</h3>
+
+<pre>
+import cv2
+
+ip = "192.168.1.49"
+url = f"rtsp://admin:123456@{ip}:554/unicast/c1/s0/live"
+
+cap = cv2.VideoCapture(url)
+
+while True:
+    ret, frame = cap.read()
+
+    if not ret:
+        print("Failed to receive frame")
+        continue
+
+    cv2.imshow("Camera", frame)
+
+    if cv2.waitKey(1) == 27:
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+</pre>
+
+<h3>c) YOLO Inference on Camera Feed (YOLOv11n)</h3>
+
+<pre>
+import cv2
+from ultralytics import YOLO
+
+# CAMERA CONFIG
+ip = "192.168.1.49"
+url = f"rtsp://admin:123456@{ip}:554/unicast/c1/s0/live"
+
+# YOLO MODEL
+model = YOLO("yolo11n.pt")
+
+# OPEN CAMERA DIRECTLY
+cap = cv2.VideoCapture(url, cv2.CAP_FFMPEG)
+cap.set(cv2.CAP_PROP_BUFFERSIZE, 2)
+
+if not cap.isOpened():
+    print("❌ Cannot open camera stream")
+    exit()
+
+# MAIN LOOP
+while True:
+    ret, frame = cap.read()
+
+    if not ret:
+        continue
+
+    # YOLO INFERENCE
+    results = model(frame, conf=0.4, verbose=False)
+    annotated_frame = results[0].plot()
+
+    cv2.imshow("YOLO Camera Feed", annotated_frame)
+
+    if cv2.waitKey(1) == 27:
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+</pre>
+
+<h3>d) Detect Person and Trigger Alarm</h3>
+
+<pre>
+import cv2
+from ultralytics import YOLO
+import winsound
+import time
+
+# CAMERA CONFIG
+ip = "192.168.1.42"
+url = f"rtsp://admin:123456@{ip}:554/unicast/c1/s0/live"
+
+# YOLO MODEL
+model = YOLO("yolo11n.pt")
+
+# ALARM SETTINGS
+last_alarm_time = 0
+alarm_delay = 3
+
+def trigger_alarm():
+    global last_alarm_time
+    now = time.time()
+    if now - last_alarm_time > alarm_delay:
+        print("🚨 PERSON DETECTED!")
+        winsound.Beep(1000, 500)
+        last_alarm_time = now
+
+cap = cv2.VideoCapture(url, cv2.CAP_FFMPEG)
+cap.set(cv2.CAP_PROP_BUFFERSIZE, 2)
+
+if not cap.isOpened():
+    print("❌ Cannot open camera stream")
+    exit()
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        continue
+
+    results = model(frame, conf=0.4, verbose=False)
+    result = results[0]
+    person_found = False
+
+    if result.boxes is not None:
+        for box in result.boxes:
+            cls_id = int(box.cls[0])
+            if cls_id == 0:  # person class
+                person_found = True
+
+    if person_found:
+        trigger_alarm()
+
+    annotated_frame = result.plot()
+    cv2.imshow("AI CCTV Security System", annotated_frame)
+
+    if cv2.waitKey(1) == 27:
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+</pre>
+
+<h3>e) Detect Person in Specific Region (ROI) and Trigger Alarm</h3>
+
+<pre>
+import cv2
+import subprocess
+import numpy as np
+from ultralytics import YOLO
+import winsound
+import time
+
+# CAMERA CONFIG
+ip = "192.168.1.42"
+url = f"rtsp://admin:123456@{ip}:554/unicast/c1/s0/live"
+
+ffmpeg_path = r"C:\ffmpeg\bin\ffmpeg.exe"  # Update your path
+
+# YOLO MODEL
+model = YOLO("yolo11n.pt")
+
+# ALARM SETTINGS
+last_alarm_time = 0
+alarm_delay = 3
+
+def trigger_alarm():
+    global last_alarm_time
+    now = time.time()
+    if now - last_alarm_time > alarm_delay:
+        print("🚨 PERSON ENTERED RESTRICTED ZONE!")
+        winsound.Beep(1000, 500)
+        last_alarm_time = now
+
+# RESTRICTED ZONE (ROI POLYGON)
+ROI = np.array([
+    (400, 200), (1600, 200),
+    (1600, 900), (400, 900)
+], np.int32)
+
+# FFmpeg PIPE
+command = [ffmpeg_path, "-rtsp_transport", "tcp", "-fflags", "nobuffer",
+           "-flags", "low_delay", "-i", url, "-f", "rawvideo",
+           "-pix_fmt", "bgr24", "-"]
+
+pipe = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+
+width, height = 1920, 1080
+frame_size = width * height * 3
+
+while True:
+    raw_frame = pipe.stdout.read(frame_size)
+    if len(raw_frame) != frame_size:
+        continue
+
+    frame = np.frombuffer(raw_frame, dtype=np.uint8).reshape((height, width, 3))
+    frame = frame.copy()
+
+    cv2.polylines(frame, [ROI], True, (0, 0, 255), 2)
+
+    results = model(frame, conf=0.4, verbose=False)
+    result = results[0]
+    person_in_zone = False
+
+    if result.boxes is not None:
+        for box in result.boxes:
+            cls_id = int(box.cls[0])
+            if cls_id == 0:
+                x1, y1, x2, y2 = map(int, box.xyxy[0])
+                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+
+                person_center = ((x1 + x2)//2, (y1 + y2)//2)
+                inside = cv2.pointPolygonTest(ROI, person_center, False)
+
+                if inside >= 0:
+                    person_in_zone = True
+                    cv2.circle(frame, person_center, 5, (0, 0, 255), -1)
+
+    if person_in_zone:
+        trigger_alarm()
+
+    cv2.imshow("Restricted Zone AI Security", frame)
+
+    if cv2.waitKey(1) == 27:
+        break
+
+pipe.terminate()
+cv2.destroyAllWindows()
+</pre>
+
+<!-- ==================== SECTION 4 ==================== -->
+<h2>4. Pretrained Weights</h2>
+<p>Pretrained models are models that someone else has trained on large datasets. We can use these for transfer learning or direct inference.</p>
+
+<div class="note">
+<strong>📦 Where to find pretrained models:</strong>
+<ul>
+<li><strong>GitHub</strong> - Search for YOLO trained models for specific tasks</li>
+<li><strong>Roboflow Universe</strong> - Thousands of public models and datasets</li>
+<li><strong>Hugging Face Hub</strong> - Extensive model repository</li>
+<li><strong>Ultralytics</strong> - Official pretrained weights (yolo11n.pt, yolo11s.pt, etc.)</li>
+</ul>
+</div>
+
+<!-- ==================== SECTION 5 ==================== -->
+<h2>5. Practical Project 2: Faulty Dough Detection using Pretrained Model</h2>
+
+<h3>a) Download Model</h3>
+<p>Download a pretrained model from Roboflow, Hugging Face, or GitHub. For this example, we'll use <code>pastry_camera.pt</code> (a model trained to detect faulty dough).</p>
+
+<h3>b) Basic Inference Script</h3>
+
+<pre>
+from ultralytics import YOLO
+
+model = YOLO("Trained_Models/pastry_camera.pt")
+
+model.predict(
+    source="inputs/having_faulty_doughs.mp4",
+    show=True,
+    save=True,
+    project="outputs",
+    name="run1"
+)
+</pre>
+
+<h3>c) Detect Faulty Dough and Trigger Alarm</h3>
+
+<pre>
+from ultralytics import YOLO
+from playsound import playsound
+
+model = YOLO("Trained_Models/pastry_camera.pt")
+
+results = model.predict(
+    source="inputs/faulty_dough_synthetic_video.mp4",
+    show=True,
+    save=True,
+    project="outputs",
+    name="run1",
+    stream=True
+)
+
+for r in results:
+    if r.boxes is not None:
+        for cls_id in r.boxes.cls.int().tolist():
+            class_name = model.names[cls_id]
+            if class_name == "Defected":
+                print("❌ Defected Dough Detected!")
+                playsound("faulty_dough_detected_please_remove.mp3")
+</pre>
+
+<!-- ==================== SECTION 6 ==================== -->
+<h2>6. Train Our Own Model</h2>
+
+<h3>a) Step 1: Dataset Collection</h3>
+<p>Collect images relevant to your detection task. For a quality control system, capture images of products on the conveyor belt from multiple angles and lighting conditions.</p>
+
+<h3>b) Step 2: Dataset Annotation</h3>
+<p>Use <strong>Roboflow</strong> or <strong>LabelImg</strong> to draw bounding boxes around objects of interest. Export in YOLO format.</p>
+
+<div class="note">
+<strong>📝 Practical Exercise:</strong> Go to <a href="https://roboflow.com">roboflow.com</a>, upload your dataset, annotate images, and export in YOLO v8 format.
+</div>
+
+<h3>c) Step 3: Setup Environment for Model Training</h3>
+
+<p><strong>Dataset Hierarchy for YOLO Training:</strong></p>
+
+<pre>
+dataset/
+│
+├── images/
+│   ├── train/
+│   │   ├── img1.jpg
+│   │   ├── img2.jpg
+│   │   └── ...
+│   │
+│   ├── val/
+│   │   ├── img101.jpg
+│   │   ├── img102.jpg
+│   │   └── ...
+│
+├── labels/
+│   ├── train/
+│   │   ├── img1.txt
+│   │   ├── img2.txt
+│   │   └── ...
+│   │
+│   ├── val/
+│   │   ├── img101.txt
+│   │   ├── img102.txt
+│   │   └── ...
+│
+└── data.yaml
+</pre>
+
+<h3>d) Step 4: Model Training</h3>
+
+<p><strong>data.yaml file example:</strong></p>
+
+<pre>
+# data.yaml
+path: ../dataset
+train: images/train
+val: images/val
+
+nc: 2  # number of classes
+names: ['CocaCola', 'Pepsi']
+</pre>
+
+<p><strong>Training Command:</strong></p>
+
+<pre>
+yolo task=detect mode=train model=yolo11n.pt data=data.yaml epochs=100 imgsz=640
+</pre>
+
+<div class="note">
+<strong>⚙️ Parameter Explanation:</strong>
+<ul>
+<li><code>task=detect</code> - Object detection task</li>
+<li><code>mode=train</code> - Training mode</li>
+<li><code>model=yolo11n.pt</code> - Pretrained weights (nano version)</li>
+<li><code>data=data.yaml</code> - Dataset configuration file</li>
+<li><code>epochs=100</code> - Number of training iterations</li>
+<li><code>imgsz=640</code> - Input image size</li>
+</ul>
+</div>
+
+<h3>e) Step 5: Model Testing and Deployment</h3>
+
+<p><strong>Scenario:</strong> Conveyor belt quality control system. Detect Coca-Cola bottles and trigger alarms/activate motors.</p>
+
+<p><strong>Detect Coca-Cola Bottle:</strong></p>
+
+<pre>
+from ultralytics import YOLO
+
+model = YOLO("Trained_Models/cococola_best.pt")
+
+model.predict(
+    source="conveyor_final.mp4",
+    show=True,
+    save=True,
+    project="outputs",
+    name="run1"
+)
+</pre>
+
+<p><strong>Alarm Generation when Coca-Cola Bottle Detected:</strong></p>
+
+<pre>
+from ultralytics import YOLO
+from playsound import playsound
+
+model = YOLO("Trained_Models/cococola_best.pt")
+
+results = model.predict(
+    source="conveyor_final.mp4",
+    show=True,
+    save=True,
+    project="outputs",
+    name="run1",
+    stream=True
+)
+
+prev_detected = False
+
+for r in results:
+    detected = len(r.boxes) > 0
+    if detected and not prev_detected:
+        print("🚨 Coca-Cola ENTERED frame!")
+        playsound("speak.mp3")
+    prev_detected = detected
+</pre>
+
+<!-- ==================== SECTION 7 ==================== -->
+<h2>7. Practical Project: Detect Wrong Bottle on Conveyor Belt</h2>
+
+<p><strong>Problem Statement:</strong> On a production line, we need to ensure only correct products move forward. If a Coca-Cola bottle appears on the Pepsi conveyor belt (or vice versa), we must detect it and trigger an alarm/removal mechanism.</p>
+
+<pre>
+"""
+Conveyor Belt Quality Control System
+Detects wrong bottles on specific conveyor belts and triggers removal
+"""
+
+from ultralytics import YOLO
+import cv2
+import numpy as np
+import time
+from playsound import playsound
+
+# CONFIGURATION
+COCA_COLA_CLASS_ID = 0
+PEPSI_CLASS_ID = 1
+
+# Define conveyor belt regions (ROI)
+CONVEYOR_BELTS = {
+    "belt_1": {
+        "roi": np.array([(50, 300), (600, 300), (600, 700), (50, 700)], np.int32),
+        "allowed_bottle": "Pepsi",
+        "disallowed_bottle": "CocaCola"
+    },
+    "belt_2": {
+        "roi": np.array([(650, 300), (1200, 300), (1200, 700), (650, 700)], np.int32),
+        "allowed_bottle": "CocaCola",
+        "disallowed_bottle": "Pepsi"
+    }
+}
+
+# Alarm settings
+last_alarm_time = 0
+alarm_cooldown = 3
+
+# LOAD MODEL
+model = YOLO("Trained_Models/bottle_detector.pt")
+
+# VIDEO SOURCE
+cap = cv2.VideoCapture("conveyor_belt.mp4")
+
+def trigger_alarm(bottle_type, belt_name):
+    global last_alarm_time
+    current_time = time.time()
+    
+    if current_time - last_alarm_time > alarm_cooldown:
+        print(f"🚨 ALERT: {bottle_type} detected on {belt_name}!")
+        print(f"   → Activating removal mechanism...")
+        try:
+            playsound("wrong_bottle_alarm.mp3")
+        except:
+            pass  # Fallback to system beep
+        last_alarm_time = current_time
+
+# MAIN DETECTION LOOP
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+    
+    frame = frame.copy()
+    
+    # DRAW CONVEYOR BELT ZONES
+    for belt_name, belt_info in CONVEYOR_BELTS.items():
+        roi = belt_info["roi"]
+        allowed = belt_info["allowed_bottle"]
+        cv2.polylines(frame, [roi], True, (0, 255, 0), 2)
+        cv2.putText(frame, f"{belt_name} (Only {allowed})", 
+                    (roi[0][0], roi[0][1] - 10),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+    
+    # YOLO INFERENCE
+    results = model(frame, conf=0.5, verbose=False)
+    result = results[0]
+    
+    # PROCESS DETECTIONS
+    if result.boxes is not None:
+        for box in result.boxes:
+            cls_id = int(box.cls[0])
+            confidence = float(box.conf[0])
+            x1, y1, x2, y2 = map(int, box.xyxy[0])
+            class_name = model.names[cls_id]
+            
+            center_x = (x1 + x2) // 2
+            center_y = (y1 + y2) // 2
+            
+            # Determine which belt
+            bottle_belt = None
+            for belt_name, belt_info in CONVEYOR_BELTS.items():
+                roi = belt_info["roi"]
+                if cv2.pointPolygonTest(roi, (center_x, center_y), False) >= 0:
+                    bottle_belt = belt_name
+                    break
+            
+            color = (0, 255, 0)
+            
+            if bottle_belt:
+                belt_info = CONVEYOR_BELTS[bottle_belt]
+                if class_name == belt_info["disallowed_bottle"]:
+                    color = (0, 0, 255)
+                    trigger_alarm(class_name, bottle_belt)
+                    cv2.putText(frame, f"WRONG! Remove {class_name}",
+                                (x1, y1 - 20), cv2.FONT_HERSHEY_SIMPLEX,
+                                0.7, (0, 0, 255), 2)
+                elif class_name == belt_info["allowed_bottle"]:
+                    cv2.putText(frame, f"✓ {class_name} OK",
+                                (x1, y1 - 20), cv2.FONT_HERSHEY_SIMPLEX,
+                                0.6, (0, 255, 0), 2)
+            
+            cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
+            label = f"{class_name} ({confidence:.2f})"
+            cv2.putText(frame, label, (x1, y1 - 5),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+    
+    cv2.imshow("Bottle Quality Control", frame)
+    
+    if cv2.waitKey(1) == 27:
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+print("System shutdown complete.")
+</pre>
+
+<div class="warning">
+<strong>🔧 Hardware Integration Note:</strong>
+<p>To physically remove wrong bottles, you would need to interface with:</p>
+<ul>
+<li><strong>PLC (Programmable Logic Controller)</strong> via Modbus/EthernetIP</li>
+<li><strong>Arduino/Raspberry Pi</strong> via GPIO/serial communication</li>
+<li><strong>Relay Module</strong> to control pneumatic pusher or conveyor belt stopper</li>
+</ul>
+<p>Example serial command: <code>ser.write(b'REMOVE\n')</code></p>
+</div>
+
+<!-- ==================== CONCLUSION ==================== -->
+<h2>📚 Summary</h2>
+<div class="success">
+<p><strong>You have now learned:</strong></p>
+<ul>
+<li>✅ YOLO fundamentals and Ultralytics setup</li>
+<li>✅ Building a security surveillance system with person detection</li>
+<li>✅ Using pretrained models for fault detection</li>
+<li>✅ Training custom YOLO models for specific industrial needs</li>
+<li>✅ Implementing a conveyor belt quality control system with alarms</li>
+</ul>
+</div>
+
+<div class="note">
+<strong>🚀 Next Steps:</strong>
+<ul>
+<li>Collect your own dataset for your specific use case</li>
+<li>Annotate and train a custom model</li>
+<li>Deploy to edge devices like NVIDIA Jetson or Raspberry Pi</li>
+<li>Integrate with industrial automation systems (PLC, SCADA)</li>
+</ul>
+</div>
+
+<div class="footer">
+<p><strong>🎓 Questions ?</strong><br>
+Day 2: We will talk about "Business Automation"  </p>
+</div>
+
+</body>
+</html>
