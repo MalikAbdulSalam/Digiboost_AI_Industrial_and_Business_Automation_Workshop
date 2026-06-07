@@ -5,107 +5,115 @@ __________________________________________________________
 
 ## Computer Vision, YOLO Object Detection & Industrial Automation
 
-This repository contains the complete practical material for **Day 1** of the **AI Industrial Automation Workshop**. Participants will learn how to build real-world AI systems using **YOLO**, **Ultralytics**, **OpenCV**, and industrial automation concepts.
+This repository contains the complete practical material for **Day 1** of the AI Industrial Automation Workshop. Participants will learn YOLO, Ultralytics, OpenCV, and industrial automation systems.
 
 ---
 
-## 📚 Workshop Contents
+# 📌 Prerequisites
 
-1. YOLO (You Only Look Once)
-2. Ultralytics Installation
-3. AI Security Surveillance System
-4. Working with Pretrained Models
-5. Faulty Dough Detection
-6. Training Custom YOLO Models
-7. Conveyor Belt Quality Control System
+- Basic Python knowledge  
+- Windows / Linux system  
+- Internet connection  
+- Anaconda / Miniconda installed (recommended)  
+- Webcam or IP camera (optional)  
 
 ---
 
-# 1️⃣ YOLO (You Only Look Once)
+# 1️⃣ Miniconda Installation & Setup
 
-YOLO is a state-of-the-art real-time object detection algorithm.
+## Download Miniconda
+https://docs.conda.io/en/latest/miniconda.html
 
-Unlike traditional computer vision approaches that scan an image multiple times, YOLO processes the entire image in a single pass and predicts:
-
-- Object locations
-- Object classes
-- Confidence scores
-
-## ✅ Advantages of YOLO
-
-- Extremely fast
-- Real-time performance
-- High accuracy
-- Excellent for edge devices
-- Suitable for industrial automation
-
-### Applications
-
-- CCTV Surveillance
-- Autonomous Vehicles
-- Industrial Quality Control
-- Robotics
-- Smart Cities
-- Drone Vision Systems
+## Install Steps
+1. Download installer
+2. Run setup
+3. Select default options
+4. Finish installation
 
 ---
 
-# 2️⃣ Ultralytics
+## Open Anaconda Prompt (Windows)
 
-Ultralytics provides an easy-to-use implementation of YOLO.
+Start Menu → Search:
+```
+Anaconda Prompt
+```
 
-## Installation
+You should see:
+```
+(base) C:\Users\YourName>
+```
 
-### Step 1: Create Conda Environment
+---
+
+## Create Environment
 
 ```bash
 conda create -n myenv python
+```
+
+Activate:
+
+```bash
 conda activate myenv
 ```
 
-### Step 2: Install Ultralytics
+---
+
+## Install Dependencies
 
 ```bash
 pip install ultralytics
-```
-
-### Step 3: Verify Installation
-
-```bash
-python -c "from ultralytics import YOLO; print('YOLO Installed Successfully')"
-```
-
-### Additional Packages
-
-```bash
 pip install opencv-python
 pip install playsound==1.2.2
 ```
 
 ---
 
-# 3️⃣ Practical Project 1: AI Security Surveillance System
+## Verify Installation
 
-## A. Discover Devices on Network
+```bash
+python -c "from ultralytics import YOLO; print('YOLO Ready')"
+```
 
-### Linux
+---
+
+# 2️⃣ YOLO (You Only Look Once)
+
+YOLO is a real-time object detection system.
+
+### Features:
+- Fast inference
+- Single pass detection
+- High accuracy
+- Industrial applications
+
+### Applications:
+- CCTV systems
+- Robotics
+- Drones
+- Quality inspection
+- Automation
+
+---
+
+# 3️⃣ Network Camera Discovery
+
+## Linux / Ubuntu
 
 ```bash
 sudo apt install nmap
 nmap -sn 192.168.1.0/24
 ```
 
-### Windows
+## Windows
 
-Install Nmap and run:
-
-```bash
-nmap -sn 192.168.1.0/24
-```
+Use Nmap software:
+https://nmap.org/download.html
 
 ---
 
-## B. View RTSP Camera Stream
+# 4️⃣ IP Camera Stream (OpenCV)
 
 ```python
 import cv2
@@ -117,7 +125,6 @@ cap = cv2.VideoCapture(url)
 
 while True:
     ret, frame = cap.read()
-
     if not ret:
         continue
 
@@ -132,7 +139,7 @@ cv2.destroyAllWindows()
 
 ---
 
-## C. YOLO Detection on Camera Feed
+# 5️⃣ YOLO Detection on Camera
 
 ```python
 import cv2
@@ -144,15 +151,13 @@ cap = cv2.VideoCapture(url)
 
 while True:
     ret, frame = cap.read()
-
     if not ret:
         continue
 
     results = model(frame)
+    frame = results[0].plot()
 
-    annotated_frame = results[0].plot()
-
-    cv2.imshow("YOLO Feed", annotated_frame)
+    cv2.imshow("YOLO", frame)
 
     if cv2.waitKey(1) == 27:
         break
@@ -163,360 +168,156 @@ cv2.destroyAllWindows()
 
 ---
 
-## D. Person Detection Alarm System
+# 6️⃣ Person Detection Alarm System
 
-### Features
+```python
+import cv2
+from ultralytics import YOLO
+import winsound
+import time
 
-- Detects humans
-- Triggers alarm
-- Useful for restricted areas
-- Smart CCTV surveillance
+model = YOLO("yolo11n.pt")
 
-### Workflow
+last = 0
 
-```text
-Camera
-   ↓
-YOLO Detection
-   ↓
-Person Found?
-   ↓
-Yes
-   ↓
-Alarm Triggered
+def alarm():
+    global last
+    if time.time() - last > 3:
+        winsound.Beep(1000, 500)
+        print("Person Detected!")
+        last = time.time()
+
+cap = cv2.VideoCapture(url)
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        continue
+
+    results = model(frame)[0]
+
+    for box in results.boxes:
+        cls = int(box.cls[0])
+        if cls == 0:
+            alarm()
+
+    cv2.imshow("Security", results.plot())
+
+    if cv2.waitKey(1) == 27:
+        break
+
+cap.release()
+cv2.destroyAllWindows()
 ```
 
 ---
 
-## E. Restricted Area Monitoring (ROI)
+# 7️⃣ ROI Restricted Area Detection
 
-### Region of Interest (ROI)
+- Define polygon region
+- Detect person inside zone
+- Trigger alarm
 
-Detect a person only when they enter a specified zone.
-
-### Applications
-
-- Military Areas
-- Factories
+Used in:
+- Banks
+- Military zones
 - Warehouses
-- Data Centers
-- Restricted Rooms
-
-### Concept
-
-```text
-+-----------------------+
-|                       |
-|     Restricted Zone   |
-|                       |
-+-----------------------+
-```
-
-When a detected person enters the ROI:
-
-```text
-Trigger Alarm
-```
 
 ---
 
-# 4️⃣ Pretrained Models
+# 8️⃣ Pretrained Models
 
-A pretrained model is already trained by someone else.
-
-Instead of training from scratch, we can directly use the model.
-
-## Sources
-
-### GitHub
-
-Search for:
-
-```text
-YOLO trained model
-```
-
-### Roboflow Universe
-
-Thousands of public datasets and models.
-
-### Hugging Face
-
-Large collection of AI models.
-
-### Ultralytics Official Models
-
-```text
-yolo11n.pt
-yolo11s.pt
-yolo11m.pt
-yolo11l.pt
-yolo11x.pt
-```
+Sources:
+- Ultralytics (yolo11n.pt)
+- Roboflow
+- HuggingFace
+- GitHub
 
 ---
 
-# 5️⃣ Practical Project 2: Faulty Dough Detection
-
-## Objective
-
-Detect defective dough pieces on a production line.
-
-### Load Model
+# 9️⃣ Faulty Dough Detection
 
 ```python
 from ultralytics import YOLO
 
-model = YOLO("Trained_Models/pastry_camera.pt")
-```
+model = YOLO("pastry_camera.pt")
 
-### Run Inference
-
-```python
 model.predict(
-    source="inputs/having_faulty_doughs.mp4",
+    source="video.mp4",
     show=True,
     save=True
 )
 ```
 
-### Alarm on Defective Dough
+---
 
-```python
-from playsound import playsound
+# 🔟 Dataset Structure
 
-if class_name == "Defected":
-    playsound("faulty_dough_detected_please_remove.mp3")
 ```
-
----
-
-# 6️⃣ Training Our Own YOLO Model
-
-## Step 1: Dataset Collection
-
-Collect images of:
-
-- Products
-- Defects
-- Objects of Interest
-
-Capture under:
-
-- Different lighting conditions
-- Different angles
-- Different backgrounds
-
----
-
-## Step 2: Annotation
-
-### Recommended Tools
-
-- Roboflow
-- LabelImg
-
-Draw bounding boxes and export in YOLO format.
-
----
-
-## Step 3: Dataset Structure
-
-```text
 dataset/
-│
-├── images/
-│   ├── train/
-│   └── val/
-│
-├── labels/
-│   ├── train/
-│   └── val/
-│
-└── data.yaml
+ ├── images/
+ │   ├── train/
+ │   └── val/
+ ├── labels/
+ │   ├── train/
+ │   └── val/
+ └── data.yaml
 ```
 
 ---
 
-## Step 4: Create data.yaml
+# 1️⃣1️⃣ data.yaml
 
 ```yaml
 path: ../dataset
-
 train: images/train
 val: images/val
 
 nc: 2
-
-names:
-  - CocaCola
-  - Pepsi
+names: [CocaCola, Pepsi]
 ```
 
 ---
 
-## Step 5: Train Model
+# 1️⃣2️⃣ Training Command
 
 ```bash
 yolo task=detect mode=train model=yolo11n.pt data=data.yaml epochs=100 imgsz=640
 ```
 
-### Parameter Explanation
-
-| Parameter | Description |
-|------------|-------------|
-| task | Object Detection |
-| mode | Training Mode |
-| model | Pretrained Weights |
-| data | Dataset Configuration |
-| epochs | Training Iterations |
-| imgsz | Input Image Size |
-
 ---
 
-# 7️⃣ Conveyor Belt Quality Control System
+# 1️⃣3️⃣ Conveyor Belt Quality Control System
 
-## Problem Statement
-
-Wrong products may appear on the wrong conveyor belt.
-
-Examples:
-
-- Coca-Cola bottle on Pepsi line
-- Pepsi bottle on Coca-Cola line
-
-The system should:
-
-1. Detect bottles
-2. Identify bottle class
-3. Determine conveyor belt location
-4. Trigger alarm
-5. Activate removal mechanism
-
----
-
-## Workflow
-
-```text
-Camera
-   ↓
-YOLO Detection
-   ↓
-Identify Bottle
-   ↓
-Check Conveyor Belt
-   ↓
-Correct?
- ├── Yes → Continue
- └── No → Alarm + Remove
-```
-
----
-
-## Industrial Integration
-
-### PLC Integration
-
-Common protocols:
-
-- Modbus
-- Ethernet/IP
-- OPC-UA
-
-### Microcontroller Integration
-
-- Arduino
-- ESP32
-- Raspberry Pi
-
-### Relay Control
-
-Used to control:
-
-- Pneumatic Pushers
-- Conveyor Motors
-- Solenoid Valves
-
-Example:
+Detect wrong bottle on wrong belt and trigger alarm.
 
 ```python
-ser.write(b'REMOVE\n')
+# (Full system code simplified for README)
+# Uses YOLO + ROI + alarm system logic
 ```
 
 ---
 
-# 🚀 Deployment Targets
+# 🚀 Deployment
 
-After training, models can be deployed on:
-
-- NVIDIA Jetson Nano
-- NVIDIA Jetson TX2
-- NVIDIA Jetson Xavier
+- Jetson Nano
+- Jetson TX2
 - Raspberry Pi
-- Desktop PCs
-- Industrial Edge Computers
+- Industrial PCs
 
 ---
 
 # 🎯 Learning Outcomes
 
-By the end of Day 1, participants will be able to:
-
-- Build AI CCTV systems
-- Detect people using YOLO
-- Create intrusion detection systems
-- Use pretrained models
-- Train custom YOLO models
-- Build industrial inspection systems
-- Create conveyor belt quality control solutions
-- Integrate AI with automation hardware
+- YOLO object detection
+- CCTV AI system
+- Industrial automation
+- Dataset training
+- Real-time inference
+- Edge deployment
 
 ---
 
-# 📝 Recommended Practice
+# 🔜 Next
 
-1. Collect your own dataset
-2. Annotate using Roboflow
-3. Train a custom YOLO model
-4. Deploy on Jetson or Raspberry Pi
-5. Integrate with PLC or Arduino
-6. Build a complete industrial automation solution
-
----
-
-# 📖 Resources
-
-- Ultralytics YOLO
-- Roboflow
-- OpenCV
-- Hugging Face
-- GitHub Models
-
----
-
-# 🔜 Next Session
-
-## Day 2: Business Automation using n8n
-
-Topics include:
-
-- What is Automation?
-- Why Automation?
-- Triggers
-- Workflows
-- Conditions
-- Memory
-- AI Agents
-- WhatsApp Automation
-- CRM Automation
-- Business Process Automation
-
----
-
-# 👨‍🏫 Instructor
-
-**AI Industrial Automation Workshop**
-
-Computer Vision • YOLO • Industrial AI • Robotics • Automation
-
-### 🎓 Happy Learning!
+Day 2: Business Automation using n8n
