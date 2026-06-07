@@ -118,7 +118,7 @@ https://nmap.org/download.html
 ```python
 import cv2
 
-ip = "192.168.1.49"
+ip = "192.168.1.400"
 url = f"rtsp://admin:123456@{ip}:554/unicast/c1/s0/live"
 
 cap = cv2.VideoCapture(url)
