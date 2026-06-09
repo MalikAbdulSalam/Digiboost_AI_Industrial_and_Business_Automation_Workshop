@@ -1,6 +1,16 @@
 # Digiboost_AI_Industrial_and_Business_Automation Worshop
 __________________________________________________________
 
+## Important Links for Lecture Slides
+
+1. [Day 1: AI Workshop](https://malikabdulsalam.github.io/Digiboost_AI_Industrial_and_Business_Automation_Workshop/Day1_AI_Workshop.html)
+
+2. [Day 2: AI Introduction](https://malikabdulsalam.github.io/Digiboost_AI_Industrial_and_Business_Automation_Workshop/Day2_AI_Introduction.html)
+
+3. [Day 2: N8N noCode Workshop](https://malikabdulsalam.github.io/Digiboost_AI_Industrial_and_Business_Automation_Workshop/Day2_N8N_noCode_workshop.html)
+
+4. [Day 3: Future of AI](https://malikabdulsalam.github.io/Digiboost_AI_Industrial_and_Business_Automation_Workshop/Day3_Future_of_AI.html)
+
 # 🎓 AI Industrial Automation Workshop – Day 1
 
 ## Computer Vision, YOLO Object Detection & Industrial Automation
