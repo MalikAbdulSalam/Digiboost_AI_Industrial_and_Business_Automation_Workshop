@@ -527,3 +527,43 @@ By 2030, the global AI market will surpass $2 trillion, generating millions of h
 ---
 
 > 🤖 *Data based on industry reports (Gartner, McKinsey, IDC) & salary benchmarks for 2024-2025. Earnings vary by region, experience & company.*
+
+
+> 🧰 **No‑code best practices for WhatsApp:** use Wait nodes between batches, store templates in Edit Fields, respect opt-out keywords, and always include error fallbacks.
+
+---
+
+## ✅ Workshop summary: all topics covered visually
+
+- ✓ Automation (why, what)
+- ✓ Triggers · Filters · Actions
+- ✓ Workflow & mapping best practices
+- ✓ API & Webhooks (no code)
+- ✓ Nodes, Canvas, Credentials
+- ✓ Branches (Switch / IF logic)
+- ✓ Edit Fields, Aggregate, Webhook nodes
+- ✓ Execution logs, debugging, error handling
+- ✓ Collaboration: templates, user roles, sharing, n8n API
+- ✓ **WhatsApp drag & drop project** (broadcast, auto-reply, order confirmations)
+
+---
+
+### 🚀 Next steps
+
+1. Go to **n8n.com** → sign up (cloud) or run locally:
+   
+   `docker run -it --rm --name n8n -p 5678:5678 n8nio/n8n`
+
+2. Start from **Templates** → search "WhatsApp" → use template → add credentials → activate
+
+3. Build your own first automation in less than 10 minutes – all drag & drop
+
+---
+
+> *Day 2: n8n No-Code Automation | WhatsApp project ready*
+> 
+> *Drag, drop, automate — everything is point & click, zero coding required.*
+> 
+
+
+
