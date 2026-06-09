@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Day 2 – n8n Visual Automation (Drag & Drop)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0B0F1C;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            color: #EDF2F7;
+            line-height: 1.5;
+            padding: 2rem;
+        }
+
+        .workshop-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: #0F1225;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.6);
+            border: 1px solid #1F2A48;
+        }
+
+        /* header */
+        .hero {
+            background: linear-gradient(145deg, #0B0F1C, #11172E);
+            padding: 2.5rem 3rem;
+            text-align: center;
+            border-bottom: 1px solid #1F2A48;
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            background: linear-gradient(135deg, #60A5FA, #C084FC, #F472B6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            color: #9CA3AF;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0.5rem auto 0;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #1E293B;
+            color: #38BDF8;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        /* sections */
+        .section {
+            padding: 2rem 2.5rem;
+            border-bottom: 1px solid #1A1F35;
+        }
+
+        .section:nth-child(even) {
+            background: #0D1122;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #38BDF8;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-left: 4px solid #38BDF8;
+            padding-left: 1rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: #C084FC;
+            margin: 1.2rem 0 0.8rem;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 1.2rem;
+            margin: 1.2rem 0;
+        }
+
+        .visual-card {
+            background: #111827;
+            border-radius: 1.2rem;
+            padding: 1.2rem 1.5rem;
+            border: 1px solid #25324D;
+            transition: border 0.2s;
+        }
+
+        .visual-card:hover {
+            border-color: #38BDF8;
+        }
+
+        .flow-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            background: #0A0E1C;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+        }
+
+        .node-badge {
+            background: #1E2A44;
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            border: 1px solid #3B4E77;
+            color: #B9E2FF;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .arrow-icon {
+            font-size: 1.3rem;
+            color: #38BDF8;
+            font-weight: bold;
+        }
+
+        .note {
+            background: #1A1F36;
+            border-left: 4px solid #38BDF8;
+            padding: 1rem 1.4rem;
+            border-radius: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .tip {
+            background: #16212E;
+            border-left-color: #4ADE80;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #0F1225;
+            border-radius: 1rem;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #1F2A48;
+        }
+
+        th {
+            background: #0B0F1C;
+            color: #7AB7EF;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 760px) {
+            body { padding: 1rem; }
+            .section { padding: 1.5rem; }
+            .two-col { grid-template-columns: 1fr; }
+        }
+
+        .mock-canvas {
+            background: #0A0E1A;
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px dashed #3B4E77;
+            font-family: monospace;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: #090C18;
+            color: #6B7280;
+            border-top: 1px solid #1E2A44;
+        }
+
+        hr {
+            border-color: #1F2A48;
+            margin: 0.8rem 0;
+        }
+        .inline-code {
+            background: #111827;
+            padding: 0.2rem 0.5rem;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #FBBF24;
+        }
+    </style>
+</head>
+<body>
+<div class="workshop-container">
+    <div class="hero">
+        <h1>Day 2: n8n Visual Automation</h1>
+        <p>Drag, drop & automate — no code, just workflows</p>
+        <div class="badge">🔁 Triggers · Filters · Actions · Branches · WhatsApp project</div>
+    </div>
+
+    <!-- 1. Intro to Automation -->
+    <div class="section">
+        <h2>📌 1. Automation: Why & What</h2>
+        <div class="two-col">
+            <div class="visual-card">
+                <h3>⏱️ Why automate?</h3>
+                <ul style="margin-left: 1.2rem;">
+                    <li>✅ Stop repetitive manual work</li>
+                    <li>✅ Eliminate copy-paste errors</li>
+                    <li>✅ Run tasks 24/7 (while you sleep)</li>
+                    <li>✅ Connect apps without IT skills</li>
+                </ul>
+            </div>
+            <div class="visual-card">
+                <h3>🖱️ What is automation?</h3>
+                <p>Let software handle repetitive rules: <strong>When X happens → Do Y</strong>.</p>
+                <p>Example: <em>New Gmail arrives → Save attachment to Drive → Post to Slack</em> – all built visually.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Core concepts: Trigger · Filter · Action -->
+    <div class="section">
+        <h2>⚙️ 2. Core Concepts (drag & drop blocks)</h2>
+        <div class="flow-row">
+            <div class="node-badge">🔔 TRIGGER<br>“When?”</div>
+            <span class="arrow-icon">➡️</span>
+            <div class="node-badge">🔍 FILTER<br>“If this?”</div>
+            <span class="arrow-icon">➡️</span>
+            <div class="node-badge">⚡ ACTION<br>“Do this”</div>
+        </div>
+        <div class="card-grid">
+            <div class="visual-card"><strong>🔔 Trigger nodes:</strong> Schedule, Webhook, Email, Form submission, Database change.</div>
+            <div class="visual-card"><strong>🔍 Filtering:</strong> IF condition (ex: amount > 100 OR status = active). Use “IF” or “Switch” node.</div>
+            <div class="visual-card"><strong>⚡ Actions:</strong> Send email, Create Google Sheets row, Post Slack, WhatsApp message, HTTP request.</div>
+        </div>
+    </div>
+
+    <!-- 3. Workflow + best practices + mapping -->
+    <div class="section">
+        <h2>📐 3. Workflow & Best Practices (visual)</h2>
+        <div class="note">
+            <strong>📌 Workflow = sequence of connected nodes on the canvas</strong><br>
+            Analogy: recipe steps. Each node = one instruction.
+        </div>
+        <h3>✨ Best practices (no-code style)</h3>
+        <ul>
+            <li><strong>Name workflows clearly:</strong> “WhatsApp_Order_Confirmation” not “test1”</li>
+            <li><strong>Use Edit Fields</strong> to clean / combine data</li>
+            <li><strong>Add error handling:</strong> connect error output to a “Send Alert” node</li>
+            <li><strong>🔁 Mapping:</strong> click any field → choose {{…}} from previous node – no coding, just selection.</li>
+        </ul>
+        <div class="mock-canvas">
+            🧩 <strong>Mapping example:</strong> From “Webhook” node → pick <span class="inline-code">body.customer.email</span> → drag into “Send Email” To field.
+        </div>
+    </div>
+
+    <!-- 4. API & Webhooks (visual explanation) -->
+    <div class="section">
+        <h2>🌐 4. API & Webhooks (click, not code)</h2>
+        <div class="two-col">
+            <div class="visual-card">
+                <h4>🔌 Webhook node</h4>
+                <p>1. Drag Webhook trigger → get a unique URL.<br>2. Paste URL into any app (Stripe, Typeform, Shopify).<br>3. Event fires → workflow runs automatically.</p>
+            </div>
+            <div class="visual-card">
+                <h4>📡 HTTP Request node</h4>
+                <p>Choose GET/POST, paste endpoint, add headers via UI. Perfect for REST APIs without writing curl.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Nodes, Canvas, Adding first node, Node actions, Credentials, Data -->
+    <div class="section">
+        <h2>🧩 5. n8n fundamentals (point & click)</h2>
+        <div class="card-grid">
+            <div class="visual-card"><strong>🟢 Nodes</strong> – prebuilt blocks: Gmail, Slack, WhatsApp, etc.</div>
+            <div class="visual-card"><strong>🎨 Canvas</strong> – infinite workspace to drag & connect nodes.</div>
+            <div class="visual-card"><strong>➕ Adding first node</strong> – click “+” → search “Manual Trigger” → add.</div>
+            <div class="visual-card"><strong>⚡ Node Actions</strong> – each node has operations (Send, Read, Update).</div>
+            <div class="visual-card"><strong>🔐 Credentials</strong> – click “Connect account” → login once → n8n stores encrypted.</div>
+            <div class="visual-card"><strong>📊 Data</strong> – JSON flows between nodes; access via expression picker.</div>
+        </div>
+    </div>
+
+    <!-- 6. Core workflow concepts: Branches -->
+    <div class="section">
+        <h2>🔄 6. Branches (visual IF/ELSE)</h2>
+        <div class="flow-row">
+            <div class="node-badge">➕ Switch node</div>
+            <span class="arrow-icon">🔀</span>
+            <div class="node-badge">✅ Condition 1 → Path A</div>
+            <div class="node-badge">📌 Condition 2 → Path B</div>
+            <div class="node-badge">⚡ Default → Path C</div>
+        </div>
+        <div class="note">
+            💡 Example: Incoming WhatsApp msg → Switch checks keyword “price” → sends price list; keyword “support” → creates Trello ticket.
+        </div>
+    </div>
+
+    <!-- 7. Useful nodes: Edit Fields, Aggregate, Webhook -->
+    <div class="section">
+        <h2>🛠️ 7. Most useful no‑code nodes</h2>
+        <div class="two-col">
+            <div class="visual-card"><strong>✏️ Edit Fields</strong><br>Rename, merge, calculate. Example: combine first+last name using UI.</div>
+            <div class="visual-card"><strong>📊 Aggregate</strong><br>Combine multiple rows → sum, average, count. No SQL needed.</div>
+            <div class="visual-card"><strong>🔗 Webhook (trigger)</strong><br>Start workflow from external events (payments, forms, etc.)</div>
+        </div>
+    </div>
+
+    <!-- 8. Execution logs, history, error handling, debugging -->
+    <div class="section">
+        <h2>🐞 8. Execution, Logs & Debugging</h2>
+        <table>
+            <tr><th>Feature</th><th>What it does (UI based)</th></tr>
+            <tr><td>📜 Execution History</td><td>List of every run: status, duration, input/output.</td></tr>
+            <tr><td>🔴 Error Handling</td><td>Nodes have separate error output – connect to fallback action.</td></tr>
+            <tr><td>🧪 Execute Node</td><td>Test single node without running whole workflow.</td></tr>
+            <tr><td>🛑 Wait & Retry</td><td>Add “Wait” node before retrying failed steps.</td></tr>
+        </table>
+        <div class="tip note">
+            💡 Debug trick: insert “Console” node to inspect data at any point.
+        </div>
+    </div>
+
+    <!-- 9. Collaboration: Templates, User management, Admin, Members, Sharing, Credential sharing, n8n API -->
+    <div class="section">
+        <h2>👥 9. Collaboration & Team features</h2>
+        <div class="two-col">
+            <div class="visual-card"><strong>📚 Templates</strong> – 300+ ready workflows (n8n.com/templates).</div>
+            <div class="visual-card"><strong>👤 User management</strong> – roles: Owner, Admin, Member, Viewer.</div>
+            <div class="visual-card"><strong>🔧 Admin</strong> – invite users, set SSO, manage instance.</div>
+            <div class="visual-card"><strong>🧑‍🤝‍🧑 Members</strong> – see assigned workflows, executions.</div>
+            <div class="visual-card"><strong>🔗 Workflow sharing</strong> – share read-only or edit access inside workspace.</div>
+            <div class="visual-card"><strong>🔐 Credential sharing</strong> – share credentials with “use only” permission (hide secrets).</div>
+            <div class="visual-card"><strong>⚙️ n8n API</strong> – trigger workflows remotely, manage users programmatically.</div>
+        </div>
+    </div>
+
+    <!-- 10. DRAG & DROP WHATSAPP AUTOMATION PROJECT -->
+    <div class="section">
+        <h2>💬 10. WhatsApp Automation (100% drag & drop)</h2>
+        <p>Build a complete WhatsApp bot using n8n visual nodes — no code, just configuration.</p>
+
+        <div class="visual-card">
+            <h3>📲 Project 1: Scheduled WhatsApp broadcast</h3>
+            <div class="flow-row">
+                <div class="node-badge">⏰ Schedule trigger<br>(every day at 9am)</div>
+                <span class="arrow-icon">→</span>
+                <div class="node-badge">✏️ Edit Fields<br>(compose message)</div>
+                <span class="arrow-icon">→</span>
+                <div class="node-badge">💬 WhatsApp Cloud<br>Send message</div>
+            </div>
+            <p><strong>Drag & drop steps:</strong> Schedule node → WhatsApp node → connect → type message → activate.</p>
+        </div>
+
+        <div class="visual-card">
+            <h3>🤖 Project 2: Auto‑reply bot (Switch & keywords)</h3>
+            <div class="flow-row">
+                <div class="node-badge">📩 WhatsApp Webhook<br>(incoming message)</div>
+                <span class="arrow-icon">→</span>
+                <div class="node-badge">🔀 Switch node</div>
+                <span class="arrow-icon">🔽 branches</span>
+                <div class="node-badge">“hello” → Greeting</div>
+                <div class="node-badge">“price” → Catalog</div>
+                <div class="node-badge">default → Support</div>
+            </div>
+            <div class="note tip">⚙️ Configure conditions using expression picker: <span class="inline-code">{{$json.body.text}} contains "hello"</span> – all point & click.</div>
+        </div>
+
+        <div class="visual-card">
+            <h3>📢 Project 3: Bulk broadcast with rate limiting</h3>
+            <div class="flow-row">
+                <div class="node-badge">📊 Google Sheets<br>(phone list)</div>
+                <span class="arrow-icon">→</span>
+                <div class="node-badge">Split In Batches<br>(10 contacts/batch)</div>
+                <span class="arrow-icon">→</span>
+                <div class="node-badge">💬 WhatsApp send</div>
+                <span class="arrow-icon">→</span>
+                <div class="node-badge">⏳ Wait node<br>(pause 60s)</div>
+            </div>
+            <p>✅ Avoid rate limits — just drag “Wait” and set seconds with a slider.</p>
+        </div>
+
+        <div class="visual-card">
+            <h3>🧾 Project 4: Order confirmation + fallback email</h3>
+            <div class="flow-row">
+                <div class="node-badge">🛒 Webhook (new order)</div>
+                <span class="arrow-icon">→</span>
+                <div class="node-badge">✏️ Format order details</div>
+                <span class="arrow-icon">→</span>
+                <div class="node-badge">💬 WhatsApp send</div>
+                <span class="arrow-icon">⛔ error branch →</span>
+                <div class="node-badge">📧 Send email fallback</div>
+            </div>
+            <p>n8n automatically provides error output — connect it to any action.</p>
+        </div>
+
+        <div class="visual-card">
+            <h3>🎨 Complete drag & drop canvas summary (WhatsApp automation)</h3>
+            <div class="mock-canvas">
+                [Schedule] → [Edit Fields: “Today’s promotion”] → [WhatsApp: to {{$json.phone}}] <br>
+                [Webhook] → [Switch: keyword] → (branch) → [WhatsApp reply] <br>
+                [Google Sheets] → [Split Batches] → [WhatsApp broadcast] → [Wait] → [Log to sheet]
+            </div>
+            <div class="tip note" style="margin-top: 1rem;">
+                🧰 <strong>No‑code best practices for WhatsApp:</strong> use Wait nodes between batches, store templates in Edit Fields, respect opt-out keywords, and always include error fallbacks.
+            </div>
+        </div>
+    </div>
+
+    <!-- 11. Quick summary & next steps -->
+    <div class="section">
+        <h2>✅ Workshop summary: all topics covered visually</h2>
+        <div class="two-col">
+            <ul style="margin-left: 1.2rem;">
+                <li>✓ Automation (why, what)</li>
+                <li>✓ Triggers · Filters · Actions</li>
+                <li>✓ Workflow & mapping best practices</li>
+                <li>✓ API & Webhooks (no code)</li>
+                <li>✓ Nodes, Canvas, Credentials</li>
+                <li>✓ Branches (Switch / IF logic)</li>
+                <li>✓ Edit Fields, Aggregate, Webhook nodes</li>
+                <li>✓ Execution logs, debugging, error handling</li>
+                <li>✓ Collaboration: templates, user roles, sharing, n8n API</li>
+                <li>✓ <strong>WhatsApp drag & drop project</strong> (broadcast, auto-reply, order confirmations)</li>
+            </ul>
+            <div class="visual-card">
+                <h3>🚀 Next steps</h3>
+                <p>1. Go to <strong>n8n.com</strong> → sign up (cloud) or run locally:<br>
+                <code style="background:#000; padding:0.2rem 0.4rem;">docker run -it --rm --name n8n -p 5678:5678 n8nio/n8n</code></p>
+                <p>2. Start from <strong>Templates</strong> → search “WhatsApp” → use template → add credentials → activate.</p>
+                <p>3. Build your own first automation in less than 10 minutes – all drag & drop.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div class="footer">
+        <p>Day 2: n8n No-Code Automation | WhatsApp project ready</p>
+        <p style="font-size: 0.8rem;">Drag, drop, automate — everything is point & click, zero coding required.</p>
+    </div>
+</div>
+</body>
+</html>
