@@ -565,5 +565,93 @@ By 2030, the global AI market will surpass $2 trillion, generating millions of h
 > *Drag, drop, automate — everything is point & click, zero coding required.*
 > 
 
+# Digiboost Institute of Technologies
+
+**AI | Automation | Data Science | Robotics | Future Skills Training**
+
+---
+
+## 🚀 Future of Artificial Intelligence
+
+Artificial Intelligence is rapidly becoming the backbone of the global digital economy. It is transforming how humans work, think, and build businesses.
+
+- **Agentic AI:** Autonomous systems that act like digital employees and complete tasks independently
+- **Generative AI:** AI that creates content, software, marketing, and digital products automatically
+- **AI Robotics:** Intelligent machines in industries like defense, healthcare, and manufacturing
+- **AI Economy:** Every business will depend on AI-driven automation and decision systems
+- **Future Jobs:** AI will create new high-income digital careers worldwide
+- **Human + AI Collaboration:** Humans will focus on strategy while AI handles execution
+
+---
+
+## 🌍 Massive Opportunities in Artificial Intelligence
+
+AI is not just a skill—it is the **biggest wealth creation opportunity of this century**. It is reshaping global industries and creating unlimited career and business possibilities.
+
+> 🚀 **Global Career Explosion:** AI professionals are in extreme demand across USA, Europe, Middle East, and Asia
+
+> 💰 **High Income Skills:** AI engineers, automation experts, and data scientists earn some of the highest salaries worldwide
+
+> 🌐 **Freelancing Revolution:** Work globally from home using Upwork, Fiverr, and AI-powered services
+
+> 🏢 **Business Automation Era:** Companies are replacing manual work with AI agents and automation systems
+
+> 🚀 **Startup Opportunity:** Even small teams can build AI SaaS products and scale globally
+
+> 📈 **Future Security:** AI skills guarantee long-term career growth in every industry
+
+---
+
+## 🎓 Courses We Offer
+
+> **AI Advanced (6 Months)** – ML, DL, Robotics, Projects, Deployment
+
+> **Data Analytics** – Python, Excel, Power BI, Visualization
+
+> **AI Automation** – Chatbots, AI Agents, Workflow Automation
+
+> **Computer Vision** – YOLO, Object Detection, Video AI Systems
+
+> **Generative AI** – Prompt Engineering, Content Generation, APIs
+
+> **Agentic AI** – Autonomous AI Systems, Multi-Agent Workflows
+
+---
+
+## 💼 Industry & Market Training
+
+- Real-world project-based learning
+- Client communication & freelancing skills
+- Upwork, Fiverr, and global platforms training
+- Portfolio building for international clients
+- Startup development mindset
+
+---
+
+## 🎯 Career Paths After Training
+
+- AI Engineer / Machine Learning Engineer
+- Data Scientist / Data Analyst
+- Computer Vision Engineer
+- AI Automation Specialist
+- Freelancer / AI Consultant
+- AI Startup Founder
+
+---
+
+## 🚀 Start Your AI Journey Today
+
+**Join Digiboost Institute and become part of the global AI revolution.**
+
+> *Click the button below to register your interest*
+
+`[ Join Now ]` *(Registration link would go here)*
+
+---
+
+---
+
+
+
 
 
